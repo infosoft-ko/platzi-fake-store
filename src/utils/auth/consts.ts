@@ -1,0 +1,4 @@
+export const ACCESS_TOKEN_VALIDITY_DAYS = 20;
+export const ACCESS_TOKEN_COOKIE_NAME = 'token';
+export const ACCESS_TOKEN_COOKIE_MAX_AGE = 3600 * 24 * ACCESS_TOKEN_VALIDITY_DAYS;
+export const REFRESH_TOKEN_COOKIE_NAME = 'refresh_token';
