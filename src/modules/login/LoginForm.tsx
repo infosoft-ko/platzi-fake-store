@@ -9,7 +9,7 @@ export default function LoginForm() {
     const password = formData.get('password') as string;
 
     try {
-      const response = await axios.post(
+      await axios.post(
         '/api/authenticate',
         { login, password },
         {

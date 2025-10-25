@@ -46,3 +46,5 @@ Do poprawy
 
 - loading statey (np. na liscie produktow - ladniej uzywac uzywac spinnera, zeby cos pokazywac podczas ladownia, a nie zastepowac calej strony )
 - extract common components (primary button, secondary button, pagination)
+- price min/max range handling (filters UI, validation of the range, api call)
+- adjust text displaying in table on small devices (handle long texts)

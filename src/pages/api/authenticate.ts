@@ -47,7 +47,7 @@ export default async function handler(
       .setHeader('Set-Cookie', cookieString)
       .json({ token: access_token });
   } catch (error) {
-    let errorMessage = axios.isAxiosError(error)
+    const errorMessage = axios.isAxiosError(error)
       ? 'Authentication failed:' + error.response?.data.error || error.message
       : 'Unexpected error:' + error;
 
