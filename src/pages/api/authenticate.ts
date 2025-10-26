@@ -13,6 +13,12 @@ type LoginResponse = {
   error?: string;
 };
 
+const AUTH_API_URL = process.env.NEXT_PUBLIC_AUTH_API_URL;
+
+if (!AUTH_API_URL) {
+  throw new Error('Environment variable NEXT_PUBLIC_AUTH_API_URL is not set');
+}
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<LoginResponse>

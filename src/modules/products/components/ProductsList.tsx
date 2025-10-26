@@ -1,98 +1,31 @@
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import { PencilIcon, TrashIcon } from '@heroicons/react/20/solid';
 import { Spinner } from '@/components';
 import { useProductsFilteringContext } from '../context/ProductsFilteringContext';
 import useFiltersFromStorage from '../hooks/useFiltersFromStorage';
-
-type Product = {
-  id: number;
-  title: string;
-  price: number;
-  description: string;
-  category: {
-    id: number;
-    name: string;
-  };
-  images: string[];
-  creationAt: string;
-  updatedAt: string;
-};
+import { useProducts } from '../../../services/products/useProducts';
 
 export default function ProductsList() {
   const { state: filtersState } = useProductsFilteringContext();
-  const [items, setItems] = useState<Product[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const { filtersFromStorageLoaded } = useFiltersFromStorage();
 
-  useEffect(() => {
-    const fetchItems = async () => {
-      setIsLoading(true);
-
-      try {
-        const params = new URLSearchParams();
-        const {
-          title,
-          categoryId,
-          priceMin,
-          priceMax,
-          paginationOffset,
-          paginationLimit,
-        } = filtersState;
-
-        console.log(
-          'products list filters',
-          title,
-          categoryId,
-          priceMin,
-          priceMax,
-          paginationOffset,
-          paginationLimit
-        );
-
-        if (title) {
-          params.append('title', title);
-        }
-        if (categoryId) {
-          params.append('categoryId', categoryId.toString());
-        }
-        if (priceMin || priceMax) {
-          const priceMinValue = priceMin ? priceMin.toString() : '1'; // If we put 0 here - then the API will not take the filtering into account; this seems to be an undocumented behavior of the API.
-          const priceMaxValue = priceMax ? priceMax.toString() : priceMinValue;
-          params.append('price_min', priceMinValue);
-          params.append('price_max', priceMaxValue);
-        }
-
-        if (paginationOffset) {
-          params.append('offset', paginationOffset.toString());
-        }
-        if (paginationLimit) {
-          params.append('limit', paginationLimit.toString());
-        }
-
-        const queryString = params.toString();
-        const url = `https://api.escuelajs.co/api/v1/products${queryString ? `?${queryString}` : ''}`;
-
-        const response = await axios.get(url);
-        setItems(response.data);
-      } catch (error) {
-        console.error('Error fetching filtered products:', error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    if (!filtersFromStorageLoaded) {
-      return;
-    }
-
-    fetchItems();
-  }, [filtersState, filtersFromStorageLoaded]);
+  // Use the custom React Query hook
+  const { data: items = [], isLoading, error } = useProducts({
+    filters: filtersState,
+    enabled: filtersFromStorageLoaded, // Only fetch when filters are loaded from storage
+  });
 
   if (isLoading) {
     return (
       <div className="flex justify-center items-center py-10">
         <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="flex justify-center items-center py-10">
+        <p className="text-red-600">Error loading products. Please try again.</p>
       </div>
     );
   }
