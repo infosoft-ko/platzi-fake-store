@@ -2,28 +2,24 @@ import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { useAuthToken } from '@/hooks/useAuthToken';
 import { Product, ProductsFilters } from './types';
+import { DATA_STALE_TIME_MILLIS, PRODUCTS_API_URL } from './consts';
 
 export type UseProductsParams = {
   filters: ProductsFilters;
   enabled?: boolean;
 };
 
-const DATA_STALE_TIME_MILLIS = process.env.NEXT_PUBLIC_DATA_STALE_TIME_SECONDS
-  ? parseInt(process.env.NEXT_PUBLIC_DATA_STALE_TIME_SECONDS) * 1000
-  : 10 * 1000; // 10 seconds
-const PRODUCTS_API_URL = process.env.NEXT_PUBLIC_PRODUCTS_API_URL;
+export const PRODUCTS_MAIN_QUERY_KEY = 'products';
 
-if (!PRODUCTS_API_URL) {
-  throw new Error(
-    'Environment variable NEXT_PUBLIC_PRODUCTS_API_URL is not set'
-  );
-}
+export const getProductsQueryKey = (filters: ProductsFilters) => {
+  return [PRODUCTS_MAIN_QUERY_KEY, filters];
+};
 
 export function useProducts({ filters, enabled = true }: UseProductsParams) {
   const { data: token } = useAuthToken();
 
   return useQuery({
-    queryKey: ['products', filters],
+    queryKey: getProductsQueryKey(filters),
     queryFn: async () => {
       const params = new URLSearchParams();
       const {

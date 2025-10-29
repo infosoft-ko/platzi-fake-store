@@ -39,12 +39,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
 
-
-
-Do poprawy
-===========
+# Do poprawy
 
 - loading statey (np. na liscie produktow - ladniej uzywac uzywac spinnera, zeby cos pokazywac podczas ladownia, a nie zastepowac calej strony )
 - extract common components (primary button, secondary button, pagination)
 - price min/max range handling (filters UI, validation of the range, api call)
 - adjust text displaying in table on small devices (handle long texts)
+- fix dialog styling for small devices
+- fix loading data for product delete (make the dialog display non blocking)
+- fix interface of Dialog - Dialog should be more relaxed api and particular confirmation dialog components (different styling for info/warning/error) should be provided
