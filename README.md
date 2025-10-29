@@ -1,66 +1,90 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+## Disclaimer
+
+This application has been created only for training purposes. Thus it should never be deployed to production environments without prior audit.
 
 ## Getting Started
 
-First, run the development server:
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
+
+After downloading the repository, install all required dependencies:
+
+```bash
+npm isntall
+# or
+yarn install
+```
+
+Then, run the development server:
 
 ```bash
 npm run dev
 # or
 yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### How to login to the application?
 
-[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+As the application utilises [Platzi Fake Store API](https://fakeapi.platzi.com/en/about/introduction/),
+use the following credentials:
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
+- email: `john@mail.com`
+- password: `changeme`
 
-This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+as as described in [the API's documentation](https://fakeapi.platzi.com/en/rest/auth-jwt/#login).
 
-## Learn More
+## Project description
 
-To learn more about Next.js, take a look at the following resources:
+The purpose of this project is to showcase a React-based UI application that utilizes the [Platzi Fake Store API](https://fakeapi.platzi.com/en/about/introduction/)
+to:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
+- provide authentication capabilities
+- allow to manipulate (fake) store products (CRUD actions)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Technical overview
 
-## Deploy on Vercel
+From the technical perspective the aim is to use following technologies:
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- React 18
+- Nextjs for routing and code-splitting (using TypeScript)
+- [Tailwind](https://tailwindcss.com/) styling library for styling the UI and providing responsive layouts
+- [Tanstack Query](https://tanstack.com/query/latest/docs/framework/react/overview) for data fetching and caching backed-up by [axios](https://axios-http.com/) library
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+to serve following requirements:
 
-# Do poprawy
+- provide sensible app routing
+- cache data-fetching queries
+- provide code-splitting for optimal code loading
+- effectively style UI and provide responsive layouts
+- implement common and optimal UX patterns (data presentation, form validation, actions feedback etc.)
 
-- loading statey (np. na liscie produktow - ladniej uzywac uzywac spinnera, zeby cos pokazywac podczas ladownia, a nie zastepowac calej strony )
-- extract common components (primary button, secondary button, pagination)
-- price min/max range handling (filters UI, validation of the range, api call)
-- adjust text displaying in table on small devices (handle long texts)
-- fix dialog styling for small devices
-- fix loading data for product delete (make the dialog display non blocking)
-- fix interface of Dialog - Dialog should be more relaxed api and particular confirmation dialog components (different styling for info/warning/error) should be provided
-- displaying images of products
-- uploading image when adding new product
-- introduce validation lib for validation (react-validation)
-- more robust validation criteria should be introduced (however as it is now - meets the reqs of API)
-- destructure NewProductForm - extract form component (common logic), provide separate EditProductForm
+## Project management
 
-# Unmet requirements
+### Unmet requirements
 
 - table sorting by title/price
 
-# BUGS
+### Improvement suggestions
 
-- [major] filtering - shoudl be debounced on change instead of Search/Reset
-- [major] when adding product - no images support; however it's not clear if this is a requirement thus "major"
-- [minor] new/edit product - confirmation boxes instead of toast/snack bars --> to decide which is better; there is no requirement that new/edit should be in e.g. a modal; in current impl it is a separate page thus confirmation boxes make more sense
--
+- [Products list][Filter section] improve price min/max range handling
+  - provide more intuitive UI in the filters section
+  - provide validation of the range
+  - review default values for min/max range in the api call
+- [Products list] adjust long title text displaying in table on small devices (current solution is not bulletproof)
+- [Products list][Delete product] fix dialog styling for small devices
+- [Dialog component] fix interface of Dialog component
+  - Dialog component interface should have a more relaxed api (e.g. provide slots which would allow for more elastic data presentation)
+  - provide dedicated confirmation dialog components based on purpose (different styling for info/warning/error)
+- [Add/Edit product] allow for uploading product image
+- [Add/Edit product] use dedicated library for robust form handling and validation (e.g. [react-hook-form](https://react-hook-form.com/))
+- [Add/Edit product] more robust form validation criteria should be introduced (however, current solution meets the API's requirements)
+- [Add/Edit product] destructure `NewProductForm` component
+  - extract common logic to a separate component
+  - provide separate form components for add/edit product
+
+### Bugs
+
+- [major] filtering - should take place on input value change (with debounce) instead of Search/Reset
+- [major] no images support when adding/editing product (however it's not clear if this is a tangible project requirement)
+- [minor] add/edit product - confirmation boxes instead of toast/snack bars --> to decide which is better (there is no requirement that add/edit product view should be in the form of e.g. a modal; in current implementation it is a separate page thus confirmation boxes seem more natural)
