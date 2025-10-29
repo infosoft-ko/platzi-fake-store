@@ -14,6 +14,13 @@ npm isntall
 yarn install
 ```
 
+Next, provide the following env files:
+
+- `.env.local` for successfull local run; you can copy-paste-adjust the provided `.env.local.example` file
+- `.env.test` for successfull tests run; you can copy-paste-adjust the provided `.env.test.example` file
+
+### Run the server locally
+
 Then, run the development server:
 
 ```bash
@@ -24,7 +31,7 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-### How to login to the application?
+#### How to login to the application?
 
 As the application utilises [Platzi Fake Store API](https://fakeapi.platzi.com/en/about/introduction/),
 use the following credentials:
@@ -33,6 +40,16 @@ use the following credentials:
 - password: `changeme`
 
 as as described in [the API's documentation](https://fakeapi.platzi.com/en/rest/auth-jwt/#login).
+
+### Run tests
+
+Just run the appropriate `test` task like this:
+
+```bash
+npm run test
+# or
+yarn test
+```
 
 ## Project description
 
