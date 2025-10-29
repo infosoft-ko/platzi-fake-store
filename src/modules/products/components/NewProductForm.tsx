@@ -5,6 +5,7 @@ import PrimaryButton from '@/components/buttons/PrimaryButton';
 import SecondaryButton from '@/components/buttons/SecondaryButton';
 import { ConfirmationBox } from '@/components';
 import { CheckIcon, ExclamationTriangleIcon } from '@heroicons/react/20/solid';
+import { Product } from '@/services/products/types';
 
 type Category = {
   id: number;
@@ -12,6 +13,8 @@ type Category = {
 };
 
 type NewProductFormProps = {
+  mode: 'new' | 'edit';
+  product?: Product | null;
   categories: Category[];
 };
 
@@ -29,7 +32,12 @@ type ValidationError = {
 
 type FormState = 'editing' | 'success' | 'error';
 
-export default function NewProductForm({ categories }: NewProductFormProps) {
+// TODO: rename to ProductForm; decompose to serve new/edit modes
+export default function NewProductForm({
+  mode,
+  product,
+  categories,
+}: NewProductFormProps) {
   const router = useRouter();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [validationError, setValidationError] =
@@ -37,12 +45,14 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
   const [formState, setFormState] = useState<FormState>('editing');
 
   const [formData, setFormData] = useState<FormData>({
-    title: '',
-    description: '',
-    price: '',
-    categoryId: '',
+    title: product?.title || '',
+    description: product?.description || '',
+    price: product?.price?.toString() || '',
+    categoryId: product?.category?.id?.toString() || '',
   });
 
+  // additional form validation - just for the showcase and showing validation error bx
+  // normaly - there would be only one, full validation
   const validate = useCallback(() => {
     const validationErrors: ValidationError[] = [];
 
@@ -73,6 +83,8 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
     return validationErrors;
   }, [formData]);
 
+  // simple form validation - just for the showcase
+  // normaly - this would be integrated into the full validation
   const isFormValid =
     formData.title.trim() &&
     formData.description.trim() &&
@@ -89,7 +101,6 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
       ...prev,
       [name]: value,
     }));
-    // Clear validation error when user starts typing
     if (validationError) {
       setValidationError(null);
     }
@@ -110,6 +121,7 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
     setValidationError(null);
 
     try {
+      // TODO: sanitize input e.g. strip HTML tags, round price to 2 decimal places etc.
       const productData = {
         title: formData.title,
         description: formData.description,
@@ -118,12 +130,19 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
         images: ['https://placehold.co/600x400'], // no image support for now
       };
 
-      const response = await axios.post(
-        'https://api.escuelajs.co/api/v1/products',
-        productData
-      );
+      // TODO: extract to a service
+      const response =
+        mode === 'new'
+          ? await axios.post(
+              'https://api.escuelajs.co/api/v1/products',
+              productData
+            )
+          : await axios.put(
+              `https://api.escuelajs.co/api/v1/products/${product?.id}`,
+              productData
+            );
 
-      if (response.status === 201) {
+      if (mode === 'new' ? response.status === 201 : response.status === 200) {
         setFormState('success');
       }
     } catch (error: any) {
@@ -178,22 +197,33 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
     setFormState('editing');
   };
 
+  const actionText = mode === 'new' ? 'Create product' : 'Update product';
+  const actionInProgressText = mode === 'new' ? 'Creating...' : 'Updating...';
+  const actionSuccessText =
+    mode === 'new'
+      ? 'Product Created Successfully!'
+      : 'Product Updated Successfully!';
+  const actionErrorText =
+    mode === 'new' ? 'Error Creating Product' : 'Error Updating Product';
+
   return (
     <div className="w-full max-w-2xl mx-auto bg-white p-6 border border-gray-200 rounded-lg">
       <h2 className="text-2xl font-semibold text-gray-900 mb-6">
-        Add New Product
+        {mode === 'new' ? 'Add New Product' : 'Edit Product'}
       </h2>
 
       {formState === 'success' && (
         <ConfirmationBox
-          title="Product Created Successfully!"
+          title={actionSuccessText}
           type="success"
           icon={<CheckIcon className="h-5 w-5 text-green-400" />}
           actionsSlot={
             <>
-              <PrimaryButton onClick={handleAddAnother}>
-                Add Another Product
-              </PrimaryButton>
+              {mode === 'new' && (
+                <PrimaryButton onClick={handleAddAnother}>
+                  Add Another Product
+                </PrimaryButton>
+              )}
               <SecondaryButton onClick={handleGoToList}>
                 Go to Product List
               </SecondaryButton>
@@ -204,7 +234,7 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
 
       {formState === 'error' && (
         <ConfirmationBox
-          title="Error Creating Product"
+          title={actionErrorText}
           type="error"
           icon={<ExclamationTriangleIcon className="h-5 w-5 text-red-400" />}
           actionsSlot={
@@ -337,7 +367,7 @@ export default function NewProductForm({ categories }: NewProductFormProps) {
                 type="submit"
                 disabled={!isFormValid || isSubmitting}
               >
-                {isSubmitting ? 'Creating...' : 'Create Product'}
+                {isSubmitting ? actionInProgressText : actionText}
               </PrimaryButton>
               <SecondaryButton
                 type="button"

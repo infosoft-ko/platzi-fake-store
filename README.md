@@ -52,6 +52,7 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 - uploading image when adding new product
 - introduce validation lib for validation (react-validation)
 - more robust validation criteria should be introduced (however as it is now - meets the reqs of API)
+- destructure NewProductForm - extract form component (common logic), provide separate EditProductForm
 
 # BUGS
 

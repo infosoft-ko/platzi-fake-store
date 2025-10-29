@@ -8,6 +8,7 @@ import { useProductsFilteringContext } from '../context/ProductsFilteringContext
 import useFiltersFromStorage from '../hooks/useFiltersFromStorage';
 import { useProducts } from '../../../services/products/useProducts';
 import { useDeleteProduct } from '../hooks/useDeleteProduct';
+import router from 'next/router';
 
 export default function ProductsList() {
   const { state: filtersState } = useProductsFilteringContext();
@@ -100,6 +101,7 @@ export default function ProductsList() {
                     className="p-2 lg:px-4 lg:py-2 text-blue-600 hover:text-blue-800 hover:bg-blue-50 rounded transition-colors"
                     aria-label="Edit product"
                     title="Edit"
+                    onClick={() => router.push(`/products/${item.id}/edit`)}
                   >
                     <span className="lg:hidden">
                       <PencilIcon aria-hidden="true" className="size-5" />
