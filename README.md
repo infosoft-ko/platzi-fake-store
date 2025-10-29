@@ -48,3 +48,12 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 - fix dialog styling for small devices
 - fix loading data for product delete (make the dialog display non blocking)
 - fix interface of Dialog - Dialog should be more relaxed api and particular confirmation dialog components (different styling for info/warning/error) should be provided
+- displaying images of products
+- uploading image when adding new product
+- introduce validation lib for validation (react-validation)
+- more robust validation criteria should be introduced (however as it is now - meets the reqs of API)
+
+# BUGS
+
+- [major] filtering - shoudl be debounced on change instead of Search/Reset
+- [major] when adding product - no images support; however it's not clear if this is a requirement thus "major"

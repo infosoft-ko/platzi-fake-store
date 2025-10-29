@@ -3,3 +3,4 @@ export { default as Pagination } from './pagination/Pagination';
 export { default as Dialog } from './dialog/Dialog';
 export { default as PrimaryButton } from './buttons/PrimaryButton';
 export { default as SecondaryButton } from './buttons/SecondaryButton';
+export { default as ConfirmationBox } from './confirmation-box/ConfirmationBox';

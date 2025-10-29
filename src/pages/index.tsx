@@ -4,6 +4,7 @@ import {
   ProductsFilteringProvider,
   ProductsList,
 } from '@/modules/products';
+import router from 'next/router';
 
 export default function ProductsPage() {
   return (
@@ -32,6 +33,7 @@ export default function ProductsPage() {
               type="button"
               className="p-2 px-4 lg:px-6 lg:py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium"
               aria-label="Add product"
+              onClick={() => router.push('/products/new')}
             >
               <span className="lg:hidden">Add</span>
               <span className="hidden lg:inline">Add product</span>
