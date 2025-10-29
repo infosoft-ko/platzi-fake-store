@@ -1,7 +1,11 @@
 export default function Spinner() {
   return (
-    <div>
-      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" className="w-10 h-10">
+    <div data-testid="spinner">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 200 200"
+        className="w-10 h-10"
+      >
         <radialGradient
           id="a12"
           cx=".66"

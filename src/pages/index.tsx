@@ -11,7 +11,7 @@ export default function ProductsPage() {
     <ProductsFilteringProvider>
       <div className="container mx-auto px-4 py-8 bg-gray-50">
         <div className="mb-8">
-          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+          <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-6">
             Platzi Fake Store Products Catalog
           </h1>
           <p className="text-gray-600 text-sm md:text-base">
@@ -34,6 +34,7 @@ export default function ProductsPage() {
               className="p-2 px-4 lg:px-6 lg:py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 transition-colors font-medium"
               aria-label="Add product"
               onClick={() => router.push('/products/new')}
+              data-testid="add-product-button"
             >
               <span className="lg:hidden">Add</span>
               <span className="hidden lg:inline">Add product</span>

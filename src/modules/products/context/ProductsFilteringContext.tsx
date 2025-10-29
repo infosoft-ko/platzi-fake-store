@@ -77,12 +77,7 @@ export const ProductsFilteringProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [state, dispatch] = useReducer(
-    productsFilteringReducer,
-    initialState
-  );
-
-  console.log('state', state);
+  const [state, dispatch] = useReducer(productsFilteringReducer, initialState);
 
   return (
     <ProductsFilteringContext.Provider value={{ state, dispatch }}>

@@ -33,7 +33,7 @@ export default function ProductsList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center py-10">
+      <div className="flex justify-center items-center py-10" data-testid="products-loader">
         <Spinner />
       </div>
     );
@@ -41,7 +41,7 @@ export default function ProductsList() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center py-10">
+      <div className="flex justify-center items-center py-10" data-testid="products-error">
         <p className="text-red-600">
           Error loading products. Please try again.
         </p>
@@ -51,7 +51,7 @@ export default function ProductsList() {
 
   return (
     <>
-      <table className="w-full bg-white border border-gray-200 text-gray-900">
+      <table className="w-full bg-white border border-gray-200 text-gray-900" data-testid="products-list">
         <thead>
           <tr className="border-b border-gray-200">
             <th className="px-4 py-3 text-left text-sm font-semibold">Title</th>

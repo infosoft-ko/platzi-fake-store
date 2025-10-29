@@ -100,7 +100,7 @@ export default function Filters() {
   }, [filtersFromStorage]);
 
   return (
-    <div className="w-full mb-6 bg-white p-6 border border-gray-200">
+    <div className="w-full mb-6 bg-white p-6 border border-gray-200" data-testid="products-filters">
       <div className="flex justify-between items-center lg:mb-4">
         <h2 className="text-xl font-semibold text-gray-900">Filters</h2>
         <button

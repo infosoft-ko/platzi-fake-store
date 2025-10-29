@@ -12,7 +12,6 @@ export default function ProductsPagination() {
 
   const handlePageChange = useCallback(
     (page: number) => {
-      console.log('page', page);
       filtersDispatch({
         type: 'SET_PAGINATION_OFFSET',
         payload: page * paginationLimit,
@@ -28,6 +27,7 @@ export default function ProductsPagination() {
 
   return (
     <Pagination
+      testId="products-pagination"
       itemsPerPage={paginationLimit}
       currentPage={paginationOffset / paginationLimit}
       onPageChange={handlePageChange}

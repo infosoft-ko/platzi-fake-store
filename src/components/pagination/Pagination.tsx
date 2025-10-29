@@ -5,6 +5,7 @@ export type PaginationProps = {
   itemsPerPage: number;
   currentPage: number;
   onPageChange: (page: number) => void;
+  testId?: string;
 };
 
 export default function Pagination({
@@ -12,6 +13,7 @@ export default function Pagination({
   itemsPerPage,
   currentPage,
   onPageChange,
+  testId,
 }: PaginationProps) {
   const currentPageItemsStart = currentPage * itemsPerPage + 1;
   const currentPageItemsEnd = currentPage * itemsPerPage + itemsPerPage;
@@ -29,7 +31,7 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex items-center justify-between border-t border-white/10 px-2 py-3 sm:px-3">
+    <div className="flex items-center justify-between border-t border-white/10 px-2 py-3 sm:px-3" data-testid={testId}>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">

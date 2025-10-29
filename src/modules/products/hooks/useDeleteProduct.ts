@@ -56,7 +56,7 @@ export function useDeleteProduct() {
     setProductToDeleteText(null);
   }, [productToDeleteId, deleteProductLazy]);
 
-  const handleCancelDeleteProduct = useCallback(async () => {
+  const handleCancelDeleteProduct = useCallback(() => {
     setIsDeleteDialogOpen(false);
     setProductToDeleteId(null);
     setProductToDeleteText(null);

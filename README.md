@@ -54,7 +54,13 @@ Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/b
 - more robust validation criteria should be introduced (however as it is now - meets the reqs of API)
 - destructure NewProductForm - extract form component (common logic), provide separate EditProductForm
 
+# Unmet requirements
+
+- table sorting by title/price
+
 # BUGS
 
 - [major] filtering - shoudl be debounced on change instead of Search/Reset
 - [major] when adding product - no images support; however it's not clear if this is a requirement thus "major"
+- [minor] new/edit product - confirmation boxes instead of toast/snack bars --> to decide which is better; there is no requirement that new/edit should be in e.g. a modal; in current impl it is a separate page thus confirmation boxes make more sense
+-
