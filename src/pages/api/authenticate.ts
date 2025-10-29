@@ -34,7 +34,7 @@ export default async function handler(
   }
 
   try {
-    const response = await axios.post(process.env.AUTH_API_URL!, {
+    const response = await axios.post(AUTH_API_URL!, {
       email: login,
       password,
     });
@@ -45,8 +45,6 @@ export default async function handler(
       access_token,
       isSecureConnection(req)
     );
-    // TODO: Remove this console.log
-    console.log('cookieString', cookieString);
 
     return res
       .status(200)
