@@ -99,6 +99,10 @@ to serve following requirements:
 - [Add/Edit product] destructure `NewProductForm` component
   - extract common logic to a separate component
   - provide separate form components for add/edit product
+- [UX] general UX improvements:
+  - breadcrumbs and/or additional navigation (for better experience when going from Add/Edit product back to products)
+  - logout button (the utility/route is already prepared)
+- [General] improve code splitting, e.g. in main route `/` the `ProductsList` component can be lazy loaded
 
 ### Bugs
 

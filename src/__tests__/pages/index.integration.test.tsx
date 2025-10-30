@@ -16,26 +16,6 @@ jest.mock('next/router', () => ({
   })),
 }));
 
-// jest.mock('../../modules/products/hooks/useFiltersFromStorage', () => ({
-//   __esModule: true,
-//   default: () => ({
-//     filtersFromStorageLoaded: true,
-//     setFiltersInStorage: jest.fn(),
-//     filtersFromStorage: {},
-//   }),
-// }));
-
-// Object.defineProperty(window, 'localStorage', {
-//   value: {
-//     getItem: jest
-//       .fn()
-//       .mockReturnValue(
-//         JSON.stringify({ paginationOffset: 0, paginationLimit: 10 })
-//       ),
-//     setItem: jest.fn(),
-//   },
-// });
-
 // configure the mocks
 const mockUseProducts = jest.mocked(
   require('../../services/products/useProducts').useProducts

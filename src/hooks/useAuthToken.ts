@@ -15,6 +15,6 @@ export function useAuthToken() {
     },
     retry: false,
     staleTime: 1000, //5 * 60 * 1000,
-    gcTime: 1000, //10 * 60 * 1000, // TODO: Check if this is needed
+    gcTime: 1000, //10 * 60 * 1000,
   });
 }
