@@ -8,7 +8,8 @@ export default function ProductsPagination() {
     useProductsFilteringContext();
   const { setFiltersInStorage, filtersFromStorage } = useFiltersFromStorage();
 
-  const { paginationOffset, paginationLimit } = filtersState;
+  const { paginationOffset, paginationLimit, dataLoadedItemsCount } =
+    filtersState;
 
   const handlePageChange = useCallback(
     (page: number) => {
@@ -25,12 +26,17 @@ export default function ProductsPagination() {
     [paginationLimit, filtersDispatch, filtersFromStorage, setFiltersInStorage]
   );
 
+  const currentPage = paginationOffset / paginationLimit;
+
   return (
     <Pagination
       testId="products-pagination"
       itemsPerPage={paginationLimit}
-      currentPage={paginationOffset / paginationLimit}
+      currentPage={currentPage}
       onPageChange={handlePageChange}
+      totalPages={
+        dataLoadedItemsCount === paginationLimit ? currentPage + 1 : currentPage
+      }
     />
   );
 }

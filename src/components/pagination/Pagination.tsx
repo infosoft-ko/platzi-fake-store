@@ -2,14 +2,17 @@ import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid';
 
 export type PaginationProps = {
   totalItems?: number;
+  totalPages?: number;
   itemsPerPage: number;
   currentPage: number;
   onPageChange: (page: number) => void;
   testId?: string;
 };
 
+// TODO: it would be betst to change the component's interface to better resemble the paging logic of the API
 export default function Pagination({
   totalItems,
+  totalPages,
   itemsPerPage,
   currentPage,
   onPageChange,
@@ -18,6 +21,7 @@ export default function Pagination({
   const currentPageItemsStart = currentPage * itemsPerPage + 1;
   const currentPageItemsEnd = currentPage * itemsPerPage + itemsPerPage;
   const isFirstPage = currentPage === 0;
+  const isLastPage = currentPage === totalPages ? true : false;
 
   const handlePageChange = (
     e: React.MouseEvent<HTMLAnchorElement>,
@@ -31,7 +35,10 @@ export default function Pagination({
   };
 
   return (
-    <div className="flex items-center justify-between border-t border-white/10 px-2 py-3 sm:px-3" data-testid={testId}>
+    <div
+      className="flex items-center justify-between border-t border-white/10 px-2 py-3 sm:px-3"
+      data-testid={testId}
+    >
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
@@ -65,7 +72,12 @@ export default function Pagination({
         <a
           href="#"
           onClick={e => handlePageChange(e, currentPage + 1)}
-          className="relative ml-3 inline-flex items-center border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-white/10"
+          className={`relative ml-3 inline-flex items-center border border-white/10 bg-white/5 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-white/10 ${
+            isLastPage
+              ? 'opacity-50 cursor-not-allowed pointer-events-none'
+              : 'hover:bg-white/10'
+          }`}
+          aria-disabled={isLastPage}
         >
           Next
           <ChevronRightIcon aria-hidden="true" className="size-5" />

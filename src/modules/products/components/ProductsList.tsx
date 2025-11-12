@@ -9,9 +9,11 @@ import useFiltersFromStorage from '../hooks/useFiltersFromStorage';
 import { useProducts } from '../../../services/products/useProducts';
 import { useDeleteProduct } from '../hooks/useDeleteProduct';
 import router from 'next/router';
+import { useEffect } from 'react';
 
 export default function ProductsList() {
-  const { state: filtersState } = useProductsFilteringContext();
+  const { state: filtersState, dispatch: filtersDispatch } =
+    useProductsFilteringContext();
   const { filtersFromStorageLoaded } = useFiltersFromStorage();
 
   const {
@@ -23,6 +25,17 @@ export default function ProductsList() {
     enabled: filtersFromStorageLoaded,
   });
 
+  useEffect(() => {
+    if (isLoading || items.length === filtersState.dataLoadedItemsCount) {
+      return;
+    }
+
+    filtersDispatch({
+      type: 'SET_DATA_LOADED_ITEMS_COUNT',
+      payload: items.length,
+    });
+  }, [items, isLoading, filtersDispatch, filtersState.dataLoadedItemsCount]);
+
   const {
     isDeleteProductDialogOpen,
     productToDeleteText,
@@ -33,7 +46,10 @@ export default function ProductsList() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center py-10" data-testid="products-loader">
+      <div
+        className="flex justify-center items-center py-10"
+        data-testid="products-loader"
+      >
         <Spinner />
       </div>
     );
@@ -41,7 +57,10 @@ export default function ProductsList() {
 
   if (error) {
     return (
-      <div className="flex justify-center items-center py-10" data-testid="products-error">
+      <div
+        className="flex justify-center items-center py-10"
+        data-testid="products-error"
+      >
         <p className="text-red-600">
           Error loading products. Please try again.
         </p>
@@ -51,7 +70,10 @@ export default function ProductsList() {
 
   return (
     <>
-      <table className="w-full bg-white border border-gray-200 text-gray-900" data-testid="products-list">
+      <table
+        className="w-full bg-white border border-gray-200 text-gray-900"
+        data-testid="products-list"
+      >
         <thead>
           <tr className="border-b border-gray-200">
             <th className="px-4 py-3 text-left text-sm font-semibold">Title</th>

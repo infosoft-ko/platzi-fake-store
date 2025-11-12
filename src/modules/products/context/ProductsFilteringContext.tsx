@@ -8,6 +8,7 @@ export type ProductsFilteringState = {
   paginationOffset: number;
   paginationLimit: number;
   dataFromStoreLoaded: boolean;
+  dataLoadedItemsCount: number;
 };
 
 export type ProductsFilteringAction =
@@ -18,6 +19,7 @@ export type ProductsFilteringAction =
         'paginationOffset' | 'paginationLimit' | 'dataFromStoreLoaded'
       >;
     }
+  | { type: 'SET_DATA_LOADED_ITEMS_COUNT'; payload: number }
   | { type: 'SET_PAGINATION_OFFSET'; payload: number }
   | { type: 'SET_PAGINATION_LIMIT'; payload: number }
   | { type: 'RESET_FILTERS' }
@@ -36,6 +38,7 @@ export const initialState: ProductsFilteringState = {
   paginationOffset: 0,
   paginationLimit: 20,
   dataFromStoreLoaded: false,
+  dataLoadedItemsCount: 0,
 };
 
 export const productsFilteringReducer = (
@@ -45,6 +48,8 @@ export const productsFilteringReducer = (
   switch (action.type) {
     case 'SET_FILTERS':
       return { ...state, ...action.payload };
+    case 'SET_DATA_LOADED_ITEMS_COUNT':
+      return { ...state, dataLoadedItemsCount: action.payload };
     case 'SET_PAGINATION_OFFSET':
       return { ...state, paginationOffset: action.payload };
     case 'SET_PAGINATION_LIMIT':

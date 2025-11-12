@@ -16,7 +16,8 @@ export const getProductsQueryKey = (filters: ProductsFilters) => {
 };
 
 export function useProducts({ filters, enabled = true }: UseProductsParams) {
-  const { data: token } = useAuthToken();
+  // this is not needed any more because this is handled by the axios interceptor
+  // const { data: token } = useAuthToken();
 
   return useQuery({
     queryKey: getProductsQueryKey(filters),
@@ -49,12 +50,14 @@ export function useProducts({ filters, enabled = true }: UseProductsParams) {
       const url = `${PRODUCTS_API_URL}${queryString ? `?${queryString}` : ''}`;
 
       const response = await axios.get<Product[]>(url, {
-        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        // this is not needed any more because this is handled by the axios interceptor
+        // headers: token ? { Authorization: `Bearer ${token}` } : {},
       });
 
       return response.data;
     },
-    enabled: enabled && token !== undefined,
+    // enabled: enabled && token !== undefined,
+    enabled: enabled,
     staleTime: DATA_STALE_TIME_MILLIS,
     gcTime: 5 * 60 * 1000, // for unused data in cache
     retry: 2,

@@ -44,6 +44,7 @@ export default function useFiltersFromStorage() {
         categoryId: categoryId ? categoryId : undefined,
         priceMin: priceMin ? priceMin : undefined,
         priceMax: priceMax ? priceMax : undefined,
+        
       },
     });
     if (paginationOffset) {

@@ -12,8 +12,7 @@ type Category = {
 };
 
 export default function Filters() {
-  const { dispatch: filtersDispatch } =
-    useProductsFilteringContext();
+  const { dispatch: filtersDispatch } = useProductsFilteringContext();
   const [showFilters, setShowFilters] = useState(false);
   const [categories, setCategories] = useState<Category[]>([]);
   const { setFiltersInStorage, filtersFromStorage } = useFiltersFromStorage();
@@ -53,12 +52,17 @@ export default function Filters() {
       } as ProductsFilteringState;
 
       filtersDispatch({
+        type: 'SET_PAGINATION_OFFSET',
+        payload: 0,
+      });
+      filtersDispatch({
         type: 'SET_FILTERS',
         payload: filtersState,
       });
       setFiltersInStorage({
         ...filtersFromStorage,
         ...filtersState,
+        paginationOffset: 0,
       });
     },
     [
@@ -100,7 +104,10 @@ export default function Filters() {
   }, [filtersFromStorage]);
 
   return (
-    <div className="w-full mb-6 bg-white p-6 border border-gray-200" data-testid="products-filters">
+    <div
+      className="w-full mb-6 bg-white p-6 border border-gray-200"
+      data-testid="products-filters"
+    >
       <div className="flex justify-between items-center lg:mb-4">
         <h2 className="text-xl font-semibold text-gray-900">Filters</h2>
         <button

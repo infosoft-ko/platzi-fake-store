@@ -1,7 +1,15 @@
+import { ConfirmationBox } from '@/components';
+import { ExclamationTriangleIcon } from '@heroicons/react/20/solid';
 import axios from 'axios';
 import router from 'next/router';
+import { useState } from 'react';
+
+type FormState = 'editing' | 'success' | 'error';
 
 export default function LoginForm() {
+  const [formState, setFormState] = useState<FormState>('editing');
+  const [errorMessage, setErrorMessage] = useState<string | null>(null);
+
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.target as HTMLFormElement);
@@ -21,14 +29,19 @@ export default function LoginForm() {
 
       router.push('/');
     } catch (error) {
+      let errorMessage;
       if (axios.isAxiosError(error)) {
-        console.error(
-          'Authentication failed:',
-          error.response?.data || error.message
-        );
+        errorMessage =
+          'Authentication failed:' +
+          (error.response?.data?.error || error.message);
+        console.error(errorMessage);
       } else {
-        console.error('Unexpected error:', error);
+        errorMessage = 'Unexpected error:' + error;
+        console.error(errorMessage);
       }
+
+      setFormState('error');
+      setErrorMessage('Authentication failed');
     }
   };
 
@@ -42,6 +55,18 @@ export default function LoginForm() {
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          {formState === 'error' && (
+            <div className="mb-6">
+              <ConfirmationBox
+                title={errorMessage || 'Error logging in'}
+                type="error"
+                icon={
+                  <ExclamationTriangleIcon className="h-5 w-5 text-red-400" />
+                }
+              />
+            </div>
+          )}
+
           <form onSubmit={handleSubmit} className="space-y-6">
             <div>
               <label
